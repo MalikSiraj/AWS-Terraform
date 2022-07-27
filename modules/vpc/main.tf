@@ -6,25 +6,27 @@ resource "aws_vpc" "vpc" {
     Name = "${var.infra_env}-vpc"    
     }
 }
+data "aws_availability_zones" "available" {
+  state = "available"
+}
 resource "aws_subnet" "public" {
-  for_each = var.public_subnet_numb
-  
+  count = length(var.vpc_public_subnet_cidr)
+  cidr_block = var.vpc_public_subnet_cidr[count.index]
+  availability_zone = data.aws_availability_zones.available.names[count.index % length(data.aws_availability_zones.available.names)]
+
   vpc_id = aws_vpc.vpc.id 
-  cidr_block = cidrsubnet(aws_vpc.vpc.cidr_block,4,each.value)
   tags = {
-    Name = "${var.infra_env}-${each.key}-public-subnet"
-    subnet = "${each.key}-${each.value}"
+    Name = "${var.infra_env}-${count.index}-public-subnet"
   }
 }
 
 resource "aws_subnet" "private" {
-  for_each = var.private_subnet_numb
-  
+  count = length(var.vpc_private_subnet_cidr)
   vpc_id = aws_vpc.vpc.id 
-  cidr_block = cidrsubnet(aws_vpc.vpc.cidr_block,4,each.value)
+  cidr_block = var.vpc_private_subnet_cidr[count.index]
+  availability_zone = data.aws_availability_zones.available.names[count.index % length(data.aws_availability_zones.available.names)]
   tags = {
-    Name = "${var.infra_env}-${each.key}-private-subnet"
-    subnet = "${each.key}-${each.value}"
+    Name = "${var.infra_env}-${count.index}-private-subnet"
   }
 }
 
@@ -35,7 +37,7 @@ resource "aws_internet_gateway" "gateway" {
   }
 }
 
-
+/*
 resource "aws_eip" "nat"{
   vpc = true
 
@@ -44,15 +46,18 @@ resource "aws_eip" "nat"{
   }
 }
 
+
+
 resource "aws_nat_gateway" "ngw"{
   allocation_id = aws_eip.nat.id
 
-  subnet_id = aws_subnet.public[element(keys(aws_subnet.public),0)].id
+  #subnet_id = aws_subnet.public[element(keys(aws_subnet.public),0)].id
+  subnet_id = aws_subnet.public[0].id
   tags = {
     Name = "${var.infra_env}-ngw"
   }
 }
-
+*/
 
 resource "aws_route_table" "public-rt" {
   
@@ -69,26 +74,27 @@ resource "aws_route_table" "public-rt" {
 resource "aws_route_table" "private-rt" {
   
   vpc_id = aws_vpc.vpc.id
-  route{
+  /*route{
     cidr_block = "0.0.0.0/0"
     nat_gateway_id = aws_nat_gateway.ngw.id
-  }
+  }*/
   tags = {
     Name = "${var.infra_env}-prvate-rt"
   }
 }
 
 resource "aws_route_table_association" "public" {
-  for_each = aws_subnet.public
-  subnet_id = aws_subnet.public[each.key].id
+  #for_each = aws_subnet.public
+  count = length(aws_subnet.public)
+  subnet_id = aws_subnet.public[count.index].id
 
   route_table_id = aws_route_table.public-rt.id
   
 }
 
 resource "aws_route_table_association" "private" {
-  for_each = aws_subnet.private
-  subnet_id = aws_subnet.private[each.key].id
+  count = length(aws_subnet.private)
+  subnet_id = aws_subnet.private[count.index].id
 
   route_table_id = aws_route_table.private-rt.id
   

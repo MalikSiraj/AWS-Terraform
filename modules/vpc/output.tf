@@ -13,6 +13,16 @@ output "vpc_public_subnets" {
   }
   
 }
+output "public-subnets" {
+    value = aws_subnet.public
+  
+}
+
+output "private-subnets" {
+    value = aws_subnet.private
+  
+}
+
 /*variable "security_group" {
   value = [ aws_security_group.allow-ssh-http-https ] 
 }*/

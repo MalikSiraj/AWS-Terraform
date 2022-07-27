@@ -10,6 +10,16 @@ variable "vpc_cidr" {
   default = "10.0.0.0/16"
 }
 
+variable "vpc_public_subnet_cidr" {
+  type = list(string)
+  description = "List of cidr to create public subnets in given avalibility zone within VPC"
+
+}
+
+variable "vpc_private_subnet_cidr" {
+  type = list(string)
+  description = "List of cidr to create private subnets in given avalibility zone within VPC"
+}
 
 variable "public_subnet_numb" {
   type = map(number)

@@ -1,9 +1,3 @@
-provider "aws" {
-  region = "us-east-1"
-  access_key = "AKIA2VDJXVOWDEWAKVPX"
-  secret_key = "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"
-}
-
 module "ec2" {
     source = "./modules/ec2"
     infra_env = ""
