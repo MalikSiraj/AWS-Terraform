@@ -29,3 +29,25 @@ variable "security_group" {
     description = "list of security group to attach to EC2 instance"
     default = [  ]
 }
+
+variable "key_name" {
+    type = string
+    description = "name of keypair to use"
+    default = " "
+
+}
+variable "vpc_security_group_ids" {
+    type = list(string)
+    description = "List of security groups"
+    default = null  
+}
+variable "user_data_base64" {
+  type = string
+  description = "User data to provide during the launching the instance"
+}
+variable "user_data_replace_on_change" {
+    type = bool
+    description = "When used in combination with user_data or user_data_base64 will trigger a destroy and recreate when set to true. Defaults to false if not set"
+    default = "false"
+  
+}
