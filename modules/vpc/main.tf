@@ -37,7 +37,7 @@ resource "aws_internet_gateway" "gateway" {
   }
 }
 
-/*
+
 resource "aws_eip" "nat"{
   vpc = true
 
@@ -57,7 +57,7 @@ resource "aws_nat_gateway" "ngw"{
     Name = "${var.infra_env}-ngw"
   }
 }
-*/
+
 
 resource "aws_route_table" "public-rt" {
   
@@ -74,10 +74,10 @@ resource "aws_route_table" "public-rt" {
 resource "aws_route_table" "private-rt" {
   
   vpc_id = aws_vpc.vpc.id
-  /*route{
+  route{
     cidr_block = "0.0.0.0/0"
     nat_gateway_id = aws_nat_gateway.ngw.id
-  }*/
+  }
   tags = {
     Name = "${var.infra_env}-prvate-rt"
   }
@@ -100,7 +100,7 @@ resource "aws_route_table_association" "private" {
   
 }
 
-resource "aws_security_group" "allow-ssh" {
+resource "aws_security_group" "allow-ssh-http-https" {
   description = "Allow ssh http https from anywhere"
   vpc_id = aws_vpc.vpc.id
   ingress = [

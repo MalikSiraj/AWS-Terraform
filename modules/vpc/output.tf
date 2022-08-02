@@ -23,6 +23,7 @@ output "private-subnets" {
   
 }
 
-/*variable "security_group" {
-  value = [ aws_security_group.allow-ssh-http-https ] 
-}*/
+output "security_group" {
+
+    value = [ aws_security_group.allow-ssh-http-https ] 
+}
