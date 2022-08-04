@@ -1,4 +1,4 @@
-variable "infra_env" {
+variable "infra" {
   type = string
   description = "Infrastructure Environment"
   default = "Terraform"
@@ -19,6 +19,10 @@ variable "vpc_public_subnet_cidr" {
 variable "vpc_private_subnet_cidr" {
   type = list(string)
   description = "List of cidr to create private subnets in given avalibility zone within VPC"
+}
+variable "enable_nat_gateway" {
+  type = bool
+  default = false  
 }
 
 variable "public_subnet_numb" {
