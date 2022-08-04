@@ -28,7 +28,7 @@ output "ami-id" {
 */
 module "ec2" {
     source = "../../modules/ec2"
-    infra_env = ""
+    infra_env = "Terraform"
     subnets = keys(module.vpc.vpc_public_subnets)
     security_group = module.vpc.security_group
     instance_type = "t2.micro"
