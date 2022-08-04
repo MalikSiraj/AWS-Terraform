@@ -74,7 +74,7 @@ resource "aws_route_table" "public-rt" {
 
 resource "aws_route" "nat-gateway-route" {
   count = var.enable_nat_gateway ? 1 : 0
-  route_table_id = aws_route_table.private-rt
+  route_table_id = aws_route_table.private-rt[0].id
   destination_cidr_block = "0.0.0.0/0"
   nat_gateway_id = aws_nat_gateway.ngw[0].id
   depends_on = [
