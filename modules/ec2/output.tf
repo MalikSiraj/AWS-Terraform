@@ -1,8 +1,11 @@
-/*
-variable "instance_id" {
-    value = aws_instance.ec2Instance.id
+
+output "instance_id" {
+    value = aws_instance.ec2Instance.*.id
 }
-variable "instance-ip" {
-    value = aws_eip.ec2-ip.public_ip
+output "instance-ip" {
+    value = aws_instance.ec2Instance.*.public_ip
+}
+output "keyname" {
+    value = data.aws_key_pair.MyEC2Key.key_name
   
-}*/
+}
