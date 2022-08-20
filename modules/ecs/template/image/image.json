@@ -1,0 +1,23 @@
+[
+    {
+        "name"  : "testapp",
+        "image" : "${app_image}",
+        "cpu"   : 1024, //"%{fargate_cpu}",
+        "memory": 1000, //"${fargate_memory}",
+        "networkMode": "bridge", //"awsvpc",
+        "logConfiguration": {
+            "logDriver":"awslogs",
+            "options": {
+                "awslogs-group": "/ecs/testapp",
+                "awslogs-region": "${aws_region}",
+                "awslogs-stream-prefic": "ecs"
+            }
+        },
+        "portMappings":[
+            {
+                "containerPort": "${app_port}",
+                "hostPort": "0"
+            }
+        ]
+    }
+]
