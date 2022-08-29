@@ -3,8 +3,9 @@ module "vpc" {
   #version        = "2.38.0"
   name           = "Nginx-VPC"
   cidr           = "10.13.0.0/16"
-  azs            = ["us-east-1a", "us-east-1b"]
-  public_subnets = ["10.13.1.0/24", "10.13.2.0/24"]
+  azs            = ["us-east-1a", "us-east-1b", "us-east-1b"]
+  public_subnets = ["10.13.1.0/24", "10.13.2.0/24", "10.13.3.0/24"]
+  private_subnets = ["10.13.4.0/24", "10.13.5.0/24", "10.13.6.0/24"]
   tags = {
     "env"       = "dev"
     "createdBy" = "Siraj"
