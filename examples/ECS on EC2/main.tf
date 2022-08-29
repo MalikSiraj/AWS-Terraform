@@ -1,7 +1,7 @@
 module "vpc" {
   source         = "terraform-aws-modules/vpc/aws"
   #version        = "2.38.0"
-  name           = "Nginx-VPC"
+  name           = "Nginx-VPC-Assignment5"
   cidr           = "10.13.0.0/16"
   azs            = ["us-east-1a", "us-east-1b", "us-east-1b"]
   public_subnets = ["10.13.1.0/24", "10.13.2.0/24", "10.13.3.0/24"]
