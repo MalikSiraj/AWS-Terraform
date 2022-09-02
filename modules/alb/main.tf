@@ -2,7 +2,8 @@ resource "aws_lb" "test-lb" {
   name               = "test-ecs-lb"
   load_balancer_type = "application"
   internal           = false
-  subnets            = var.alb_public_subnets
+  #subnets            = var.alb_public_subnets
+  subnets            = [for subnet in var.alb_public_subnets : subnet]
   tags = {
     "env"       = "dev"
     "createdBy" = "siraj"

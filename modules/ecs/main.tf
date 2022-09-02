@@ -35,6 +35,7 @@ resource "aws_ecs_capacity_provider" "test" {
 resource "aws_ecs_task_definition" "task-definition-test" {
   family                = "web-family"
   container_definitions = file("../../container-definitions/container-def.json")
+  #container_definitions = "public.ecr.aws/m5u3m7r4/nodejs-test:latest"
   network_mode          = "bridge"
   tags = {
     "env"       = "dev"
@@ -46,7 +47,7 @@ resource "aws_ecs_service" "service" {
   name            = "web-service"
   cluster         = aws_ecs_cluster.web-cluster.id
   task_definition = aws_ecs_task_definition.task-definition-test.arn
-  desired_count   = 2
+  desired_count   = 3
   ordered_placement_strategy {
     type  = "binpack"
     field = "cpu"

@@ -7,7 +7,7 @@ variable "infra" {
 variable "vpc_cidr" {
   type = string
   description = "VPC cidr range"
-  default = "10.0.0.0/16"
+  default = "10.13.0.0/16"
 }
 
 variable "vpc_public_subnet_cidr" {
